@@ -22,7 +22,8 @@ public class CaptionService {
 
     public List<Caption> captionSearch(String videoId){
 
-        String uri = "https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId="+videoId;
+        String uri = "https://www.googleapis.com/youtube/v3/captions?part=snippet&videoId="+videoId+
+                "&key="+token;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<CaptionSearch> request = new HttpEntity<>(null,headers);
