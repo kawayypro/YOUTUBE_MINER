@@ -89,4 +89,16 @@ public class VMChannel {
                 ", videos=" + videos +
                 '}';
     }
+
+    private VMChannel(String id, String name, String description, String created_time, List<VMVideo> videos) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdTime = created_time;
+        this.videos = videos;
+    }
+
+    public static VMChannel of(String id, String name, String description, String created_time, List<VMVideo> VMVideos){
+        return new VMChannel(id,name,description,created_time,VMVideos);
+    }
 }

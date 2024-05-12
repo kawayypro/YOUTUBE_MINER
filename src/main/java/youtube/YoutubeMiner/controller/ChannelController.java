@@ -38,7 +38,7 @@ import java.util.List;
 
 @Tag(name= "Youtube", description =  "Youtube management API")
 @RestController
-@RequestMapping("/api/youtube/v3/channels")
+@RequestMapping("/channels")
 public class ChannelController {
 
     @Autowired
@@ -70,20 +70,11 @@ public class ChannelController {
             throw new MaxValueException();
         }
         Channel channelYoutube = channelService.channelSearch(id);
-        VMChannel channel= TransformChannel.transformChannel(channelYoutube);
 
         List<VideoSnippet> videosYoutube = videoService.videoSearch(id);
-        List<VMVideo> videos = new LinkedList<>();
+        channelYoutube.setVideos(videosYoutube);
 
-        for(VideoSnippet videoYoutube:videosYoutube){
-            VMVideo video= TransformVideo.transformVideo(videoYoutube);
-            List<VMComment> comentarios = commentService.commentsSearch(videoYoutube.getSnippet().getResourceId().getVideoId()).stream().map(TransformComment::transformComment).toList();
-            video.setComments(comentarios);
-            List<VMCaption> captions= captionService.captionSearch(videoYoutube.getSnippet().getResourceId().getVideoId()).stream().map(TransformCaption::transformCaption).toList();
-            video.setCaptions(captions);
-            videos.add(video);
-        }
-        channel.setVideos(videos);
+        VMChannel channel = TransformChannel.transformChannel(channelYoutube);
         return channel;
     }
     @Operation(
@@ -94,6 +85,9 @@ public class ChannelController {
             @ApiResponse(responseCode = "200", description = "Youtube channel", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
             @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
     })
+
+
+
     @PostMapping("/{id}")
     public Channel postChannel(@Parameter(description = "User's id of the channel")@PathVariable String id,
                                @Parameter(description = "Optional parameter to limit the number of videos")@RequestParam(required = false, defaultValue = "10") Integer sizeVideo,
@@ -105,11 +99,7 @@ public class ChannelController {
         Integer maxVideo = sizeVideo==null? 10 : sizeVideo;
         Integer maxComment = sizeComment==null? 10: sizeComment;
         VMChannel channel=findChannel(id, maxVideo, maxComment);
-        //String uri = "http://localhost:8080/videominer/channels";
-        String uri = "https://videominer.azurewebsites.net/videominer/channels";
-
-        System.out.println(channel);
-
+        String uri = "http://localhost:8080/videominer/channels";
 
         HttpHeaders headers= new HttpHeaders();
 

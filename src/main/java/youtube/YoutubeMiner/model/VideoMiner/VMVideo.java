@@ -101,4 +101,19 @@ public class VMVideo {
                 ", captions=" + captions +
                 '}';
     }
+
+
+    private VMVideo(String videoId, String title, String description, String publishedAt, List<VMCaption> VMCaptions, List<VMComment> VMComments) {
+        this.id = videoId;
+        this.name = title;
+        this.description = description;
+        this.releaseTime= publishedAt;
+        this.captions = VMCaptions;
+        this.comments = VMComments;
+
+    }
+
+    public static VMVideo of(String videoId, String title, String description, String publishedAt, List<VMCaption> VMCaptions, List<VMComment> VMComments) {
+        return new VMVideo(videoId,title,description,publishedAt,VMCaptions,VMComments);
+    }
 }

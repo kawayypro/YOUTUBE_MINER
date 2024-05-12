@@ -7,10 +7,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import youtube.YoutubeMiner.model.youtube.channel.ChannelSearch;
 import youtube.YoutubeMiner.model.youtube.videoSnippet.VideoSnippetSearch;
 import youtube.YoutubeMiner.model.youtube.videoSnippet.VideoSnippet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,15 +19,28 @@ public class VideoService {
     @Autowired
     RestTemplate restTemplate;
 
-    private String token = "AIzaSyDCGwmBSn9UcI-x6zv38s1wR73HW_i_Stg";
+    @Autowired
+    CaptionService captionService;
+
+    @Autowired
+    CommentService commentService;
+
+    private String token = "AIzaSyDD99SjMueRrScG_72Fnb9aOOsHjUltTHE";
 
     public List<VideoSnippet> videoSearch(String channelId){
-        String uri = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId="+channelId+"&type=video&key="+token;
+        String uri = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId="+channelId;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);
         ResponseEntity<VideoSnippetSearch> response =
                 restTemplate.exchange(uri, HttpMethod.GET, request, VideoSnippetSearch.class);
-        return response.getBody().getItems();
+        List<VideoSnippet> videos = response.getBody().getItems();
+        List<VideoSnippet> videosNew = new ArrayList<>();
+        for (VideoSnippet v:videos){
+            v.setCaptions(captionService.captionSearch(v.getId().getVideoId()));
+            v.setComments(commentService.commentsSearch(v.getId().getVideoId()));
+            videosNew.add(v);
+        }
+        return videosNew;
     }
 }

@@ -11,12 +11,12 @@ import java.util.List;
 public class TransformChannel {
 
     public static VMChannel transformChannel(Channel channelYouTube){
-        VMChannel channelFinal= new VMChannel();
-        channelFinal.setId(channelYouTube.getId());
-        channelFinal.setDescription(channelYouTube.getSnippet().getDescription());
-        channelFinal.setName(channelYouTube.getSnippet().getTitle());
-        channelFinal.setCreatedTime(channelYouTube.getSnippet().getPublishedAt());
-        channelFinal.setVideos(parseoVideos(channelYouTube.getVideos()));
+        VMChannel channelFinal = VMChannel.of(
+                channelYouTube.getId(),
+                channelYouTube.getSnippet().getDescription(),
+                channelYouTube.getSnippet().getTitle(),
+                channelYouTube.getSnippet().getPublishedAt(),
+                parseoVideos(channelYouTube.getVideos()));
         return channelFinal;
     }
 

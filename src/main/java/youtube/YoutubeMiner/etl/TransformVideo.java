@@ -12,15 +12,14 @@ import java.util.List;
 public class TransformVideo {
 
     public static VMVideo transformVideo(VideoSnippet video){
-        VMVideo videoFinal= new VMVideo();
-        videoFinal.setId(video.getSnippet().getResourceId().getVideoId());
-        videoFinal.setName(video.getSnippet().getTitle());
-        videoFinal.setDescription(video.getSnippet().getDescription());
-        videoFinal.setReleaseTime(video.getSnippet().getPublishedAt());
-        videoFinal.setComments(parseoComment(video));
-        videoFinal.setCaptions(parseoCaption(video));
-
-        return videoFinal;
+        return VMVideo.of(
+                video.getId().getVideoId(),
+                video.getSnippet().getTitle(),
+                video.getSnippet().getDescription(),
+                video.getSnippet().getPublishedAt(),
+                parseoCaption(video),
+                parseoComment(video)
+        );
 
     }
 
