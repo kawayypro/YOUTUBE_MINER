@@ -19,10 +19,9 @@ public class CommentService {
     @Autowired
     RestTemplate restTemplate;
 
-    private String token = "AIzaSyDD99SjMueRrScG_72Fnb9aOOsHjUltTHE" ;
-
     public List<Comment> commentsSearch(String videoId, Integer maxComments) {
-        String uri = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId="+videoId+"&key="+token + "&maxResults=" + maxComments;
+        String token = "AIzaSyDY4ScR2b2JbKLI8oUPMphj2ibylDVJCZA";
+        String uri = "https://www.googleapis.com/youtube/v3/commentThreads?part=snippet&videoId="+videoId+"&key="+ token + "&maxResults=" + maxComments;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<CommentSearch> request = new HttpEntity<>(null,headers);

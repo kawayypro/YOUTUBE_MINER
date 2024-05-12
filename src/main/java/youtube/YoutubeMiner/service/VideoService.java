@@ -26,11 +26,10 @@ public class VideoService {
     @Autowired
     CommentService commentService;
 
-    private String token = "AIzaSyDD99SjMueRrScG_72Fnb9aOOsHjUltTHE";
-
     public List<VideoSnippet> videoSearch(String channelId, Integer maxComments, Integer maxVideos) {
 
-        String uri = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId="+channelId+"&maxResults=" + maxVideos;
+        String token = "AIzaSyDY4ScR2b2JbKLI8oUPMphj2ibylDVJCZA";
+        String uri = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId="+channelId+"&maxResults=" + maxVideos+"&key="+ token;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);

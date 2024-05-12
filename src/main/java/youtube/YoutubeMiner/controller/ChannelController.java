@@ -78,12 +78,9 @@ public class ChannelController {
             description= "Add a new Youtube channel (looked by its id in YouTube) whose data is passed in the body of the request in Json format",
             tags = {"channels", "post"})
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Youtube channel", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
-            @ApiResponse(responseCode = "404", content = {@Content(schema = @Schema())})
+            @ApiResponse(responseCode = "201", description = "Youtube channel", content = {@Content(schema = @Schema(implementation = Channel.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})
     })
-
-
-
     @PostMapping("/{id}")
     public VMChannel postChannel(@Parameter(description = "User's id of the channel")@PathVariable String id,
                                @Parameter(description = "Optional parameter to limit the number of videos")@RequestParam(required = false, defaultValue = "10") Integer sizeVideo,

@@ -15,10 +15,9 @@ public class ChannelService {
     @Autowired
     RestTemplate restTemplate;
 
-    private String token = "AIzaSyDD99SjMueRrScG_72Fnb9aOOsHjUltTHE" ;
-
     public Channel channelSearch(String id) {
-        String uri = "https://www.googleapis.com/youtube/v3/channels?part=snippet&id="+id+"&key="+token;
+        String token = "AIzaSyDY4ScR2b2JbKLI8oUPMphj2ibylDVJCZA";
+        String uri = "https://www.googleapis.com/youtube/v3/channels?part=snippet&id="+id+"&key="+ token;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<ChannelSearch> request = new HttpEntity<>(null, headers);

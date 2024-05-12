@@ -15,7 +15,7 @@ class ChannelServiceTest {
     ChannelService channelService;
 
     @Test
-    @DisplayName("get channel")
+    @DisplayName("Get a channel")
     void channelSearch() {
         Channel channel = channelService.channelSearch("UCZbWTaVsdcX0lJPZRyw33sQ");
         assertFalse(channel==null, "Channel is empty");
