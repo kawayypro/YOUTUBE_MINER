@@ -46,10 +46,6 @@ public class ChannelController {
     @Autowired
     VideoService videoService;
     @Autowired
-    CommentService commentService;
-    @Autowired
-    CaptionService captionService;
-    @Autowired
     RestTemplate restTemplate;
 
     @Operation(
