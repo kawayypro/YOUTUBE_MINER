@@ -89,22 +89,17 @@ public class ChannelController {
 
 
     @PostMapping("/{id}")
-    public Channel postChannel(@Parameter(description = "User's id of the channel")@PathVariable String id,
+    public VMChannel postChannel(@Parameter(description = "User's id of the channel")@PathVariable String id,
                                @Parameter(description = "Optional parameter to limit the number of videos")@RequestParam(required = false, defaultValue = "10") Integer sizeVideo,
                                @Parameter(description = "Optional parameter to limit the number of comments")@RequestParam(required = false, defaultValue = "10") Integer sizeComment
     ) throws MaxValueException {
-        if(sizeComment < 0 || sizeVideo <0){
-            throw new MaxValueException();
-        }
-        Integer maxVideo = sizeVideo==null? 10 : sizeVideo;
-        Integer maxComment = sizeComment==null? 10: sizeComment;
-        VMChannel channel=findChannel(id, maxVideo, maxComment);
+        VMChannel channel=findChannel(id, sizeVideo, sizeComment);
         String uri = "http://localhost:8080/videominer/channels";
 
         HttpHeaders headers= new HttpHeaders();
 
         HttpEntity<VMChannel> request = new HttpEntity<>(channel,headers);
-        ResponseEntity<Channel> response = restTemplate.exchange(uri, HttpMethod.POST, request, Channel.class);
+        ResponseEntity<VMChannel> response = restTemplate.exchange(uri, HttpMethod.POST, request, VMChannel.class);
         return response.getBody();
     }
 
