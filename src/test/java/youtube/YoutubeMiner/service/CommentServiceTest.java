@@ -1,5 +1,6 @@
 package youtube.YoutubeMiner.service;
 
+import youtube.YoutubeMiner.exception.MaxValueException;
 import youtube.YoutubeMiner.model.youtube.comment.Comment;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ class CommentServiceTest {
 
     @Test
     void commentsSearch() {
-        List<Comment> comments = commentService.commentsSearch("rRZdY6Pnz4A");
+        List<Comment> comments = commentService.commentsSearch("rRZdY6Pnz4A",10);
         assertFalse(comments==null, "Channel is empty");
         System.out.println(comments);
     }

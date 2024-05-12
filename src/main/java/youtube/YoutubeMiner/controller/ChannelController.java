@@ -71,7 +71,7 @@ public class ChannelController {
         }
         Channel channelYoutube = channelService.channelSearch(id);
 
-        List<VideoSnippet> videosYoutube = videoService.videoSearch(id);
+        List<VideoSnippet> videosYoutube = videoService.videoSearch(id,sizeComment,sizeVideo);
         channelYoutube.setVideos(videosYoutube);
 
         VMChannel channel = TransformChannel.transformChannel(channelYoutube);

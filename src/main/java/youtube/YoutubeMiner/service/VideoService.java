@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import youtube.YoutubeMiner.exception.MaxValueException;
 import youtube.YoutubeMiner.model.youtube.videoSnippet.VideoSnippetSearch;
 import youtube.YoutubeMiner.model.youtube.videoSnippet.VideoSnippet;
 
@@ -27,8 +28,9 @@ public class VideoService {
 
     private String token = "AIzaSyDD99SjMueRrScG_72Fnb9aOOsHjUltTHE";
 
-    public List<VideoSnippet> videoSearch(String channelId){
-        String uri = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId="+channelId;
+    public List<VideoSnippet> videoSearch(String channelId, Integer maxComments, Integer maxVideos) {
+
+        String uri = "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&channelId="+channelId+"&maxResults=" + maxVideos;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);
@@ -38,7 +40,7 @@ public class VideoService {
         List<VideoSnippet> videosNew = new ArrayList<>();
         for (VideoSnippet v:videos){
             v.setCaptions(captionService.captionSearch(v.getId().getVideoId()));
-            v.setComments(commentService.commentsSearch(v.getId().getVideoId()));
+            v.setComments(commentService.commentsSearch(v.getId().getVideoId(),maxComments));
             videosNew.add(v);
         }
         return videosNew;
