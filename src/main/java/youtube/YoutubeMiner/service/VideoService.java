@@ -20,9 +20,8 @@ public class VideoService {
 
     private String token = "AIzaSyDCGwmBSn9UcI-x6zv38s1wR73HW_i_Stg";
 
-    public List<VideoSnippet> videoSearch(String videoId){
-        String uri = "https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=" +videoId
-                +"&key="+token;
+    public List<VideoSnippet> videoSearch(String playlistId){
+        String uri = "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+playlistId+"key="+token;
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-goog-api-key", token);
         HttpEntity<VideoSnippetSearch> request = new HttpEntity<>(null, headers);
